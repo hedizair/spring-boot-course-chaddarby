@@ -13,21 +13,28 @@ public class FunRestController {
     @Value("${team.name}")
     private String teamName;
 
-    // expose "/" that return "Hello World"
-
     @GetMapping("/")
     public String sayHello() {
         return "Hello World" + " from " + coachName + " of the " + teamName + " ! His age is " + coachAge
                 + " years old.";
     }
 
-    // expose a new endpoint for "workout"
+    // expose "/teaminfo"
+
+    @GetMapping("/teaminfo")
+    public String getTeamInfo() {
+        String teamInfo = "Coach Name: " + coachName + ", Coach Age: " + coachAge + ", Team Name: " + teamName;
+        return "Here are the team details: " + teamInfo;
+    }
+
+    // expose "/workout" for "workout"
+
     @GetMapping("/workout")
     public String getWorkout() {
         return "Run a hard 5k!";
     }
 
-    // expose a new endpoint for "fortune"
+    // expose "/fortune" for "fortune"
     @GetMapping("/fortune")
     public String getDailyFortune() {
         return "Today is your lucky day!";
