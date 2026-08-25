@@ -1,4 +1,4 @@
-package com.hzair.springcoredemo;
+package com.hzair.springcoredemo.common;
 
 public interface Coach {
     String getDailyWorkout();
