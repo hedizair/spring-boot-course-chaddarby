@@ -63,6 +63,7 @@ public class Student {
         return lastName;
     }
 
+
     public void setEmail(String email) {
         this.email = email;
     }
