@@ -32,4 +32,28 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return employees;
 
     }
+
+    @Override
+    public Employee findById(int id) {
+        return entityManager.find(Employee.class, id);
+    }
+
+    // No @Transactional, because it will be handled by the service layer
+    // (EmployeeServiceImpl)
+    @Override
+    public Employee save(Employee employee) {
+
+        // If the employee.id = 0, then merge(...) will create a new emplyee
+        // If the employee.id > 0, then merge(...) will update the existing employee
+        Employee dbEmployee = entityManager.merge(employee);
+        return dbEmployee;
+    }
+
+    // No @Transactional, because it will be handled by the service layer
+    // (EmployeeServiceImpl)
+    @Override
+    public void delete(int id) {
+        Employee employee = entityManager.find(Employee.class, id);
+        entityManager.remove(employee);
+    }
 }
