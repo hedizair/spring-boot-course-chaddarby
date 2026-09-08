@@ -94,7 +94,7 @@ public class EmployeeRestController {
 
         employeeService.delete(employeeId);
 
-        return "Employee deleted";
+        return "Employee deleted - " + employeeId;
     }
 
 }
