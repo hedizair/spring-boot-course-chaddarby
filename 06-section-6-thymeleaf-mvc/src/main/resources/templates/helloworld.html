@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th='http://www.thymeleaf.org'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Hello World</title>
+    <!-- * @{...} indicate the root of the /resources/static folder  -->
+    <link rel='stylesheet' th:href='@{/css/demo.css}' />
+</head>
+
+<body>
+    <div class="page-container">
+        <h1 class="page-title">Hello World of Spring</h1>
+
+        <p class="text-block">The message : <span class="text-highlight" th:text="${message}"></span></p>
+    </div>
+</body>
+
+</html>

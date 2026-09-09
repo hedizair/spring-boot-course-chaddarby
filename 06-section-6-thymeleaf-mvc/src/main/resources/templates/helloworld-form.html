@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th='http://www.thymeleaf.org'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Hello World - Input form</title>
+    <!-- * @{...} indicate the root of the /resources/static folder  -->
+    <link rel='stylesheet' th:href='@{/css/demo.css}' />
+</head>
+
+<body>
+    <div class="page-container">
+        <p class="page-title" th:text="'Here is the form'"></p>
+
+        <form class="form" th:action="@{/processFormVersionThree}" method="post">
+            <div class="form-group">
+                <label class="form-label" for="studentName">Nom de l'étudiant</label>
+                <input class="form-input" type="text" id="studentName" name="studentName"
+                    placeholder="What's your name ?" />
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="Envoyer" />
+        </form>
+    </div>
+</body>
+
+</html>

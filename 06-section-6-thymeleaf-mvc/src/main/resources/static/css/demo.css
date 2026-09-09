@@ -1,0 +1,167 @@
+/* ==========================================================================
+   demo.css — Feuille de style réutilisable pour l'app Spring MVC + Thymeleaf
+   ========================================================================== */
+
+:root {
+  --color-primary: #4f46e5;
+  --color-primary-dark: #4338ca;
+  --color-bg: #f5f6fa;
+  --color-surface: #ffffff;
+  --color-text: #1f2430;
+  --color-text-muted: #6b7280;
+  --color-border: #d9dce3;
+  --color-danger: #dc2626;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --spacing: 1rem;
+}
+
+/* ---------- Reset léger ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* ---------- Layout générique ---------- */
+/* À mettre sur un <div> ou <main> qui englobe le contenu de la page */
+.page-container {
+  max-width: 640px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Typographie ---------- */
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.text-block {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.text-highlight {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* ancienne classe "funny" de la démo, gardée pour compat */
+.funny {
+  font-style: italic;
+  color: var(--color-primary-dark);
+}
+
+/* ---------- Formulaires ---------- */
+/* À mettre sur la balise <form> */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* Regroupe un label + son input (recommandé mais optionnel) */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Classe commune à tous les champs texte / textarea / select */
+.form-input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.form-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-input.error {
+  border-color: var(--color-danger);
+}
+
+.form-error {
+  font-size: 0.85rem;
+  color: var(--color-danger);
+}
+
+/* ---------- Boutons ---------- */
+/* Utilisable sur <button> ou <input type="submit"> */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(79, 70, 229, 0.08);
+}
+
+/* ---------- Utilitaires ---------- */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }

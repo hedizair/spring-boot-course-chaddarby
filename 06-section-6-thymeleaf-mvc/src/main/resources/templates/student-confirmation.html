@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th='http://www.thymeleaf.org'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Student confirmation</title>
+    <!-- * @{...} indicate the root of the /resources/static folder  -->
+    <link rel='stylesheet' th:href='@{/css/demo.css}' />
+</head>
+
+<body>
+    <div class="page-container">
+        <p class="page-title"> Student confirmation </p>
+
+        <p class="text-block">The student is confirmed : <span class="text-highlight"
+                th:text="${theStudent.firstName} + ' ' + ${theStudent.lastName} + ' from ' + ${theStudent.country}"></span>
+        </p>
+        <p class="text-block">His favorite language is : <span class="text-highlight"
+                th:text="${theStudent.favoriteLanguage}"></span></p>
+
+        <p class="text-block">His favorite systems is/are : 
+            
+        <ul>
+            <li class="text-highlight" th:each="tempSys : ${theStudent.favoriteSystems}" th:text="${tempSys}"></li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th='http://www.thymeleaf.org'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Student registration form</title>
+    <!-- * @{...} indicate the root of the /resources/static folder  -->
+    <link rel='stylesheet' th:href='@{/css/demo.css}' />
+</head>
+
+<body>
+    <div class="page-container">
+        <p class="page-title"> Student Registration Form </p>
+
+        <!-- !  th:object="${student}" represent the attribute name used in the controller (here "theStudent")   -->
+        <form class="form" th:action="@{/processStudentForm}" th:object="${theStudent}" method="post">
+            <div class="form-group">
+
+
+                <label class="form-label" for="firstName">First name: </label>
+
+                <!-- !    *{firstName} === ${theStudent.firstName} , it's just a shortcut -->
+                <!-- !    Automatically, spring & thymeleaf will use theStudent.getFirstName() to populate this field -->
+
+                <input class="form-input" type="text" id="firstName" th:field="*{firstName}"
+                    placeholder="What's your name ?" />
+
+
+                <label class="form-label" for="lastName">First name: </label>
+                <input class="form-input" type="text" id="lastName" th:field="*{lastName}"
+                    placeholder="What's your name ?" />
+
+
+
+                <label class="form-label" for="country">Country: </label>
+                <select class="form-input" id="country" th:field="*{country}">
+                    <!-- ! th:value is the value that will be passed into de request parameter when submitting the form -->
+
+                    <!-- ! To use a loop : th:each, choose the variable over which the loop will iterate "countries" here and  
+                     ! define the loop temp variable "tempCountry"   -->
+
+                    <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}">
+                    </option>
+                </select>
+
+                <label class="form-label" for="favoriteLanguage">Favorite Programming Language: </label>
+                <input th:field="*{favoriteLanguage}" 
+                    type="radio" 
+                    id="favoriteLanguage"
+                    th:each="tempLanguage : ${programmingLanguages}" 
+                    th:value="${tempLanguage}"
+                    th:text="${tempLanguage}"
+                    />
+                </option>
+
+                <!--
+                    ! th:field = field of the java/bean class, used to pre populate the field or to send on the request params/body
+                    ! th:each = to make loop on a variable, ex : tempSystem : ${operatingSystems}, tempSystem = local loop variable and operatingSystems is the variable on which the loop will iterate
+                    ! th:value = the value that will be send to the request
+                    ! th:text = the value that will be show to the user (<p>{{HERE}}</p>)
+                -->
+
+                <label class="form-label" for="favoriteSystems">Favorite Operating Systems: </label>
+                <input th:field="*{favoriteSystems}" 
+                    type="checkbox" 
+                    id="favoriteSystems"
+                    th:each="tempSystem : ${operatingSystems}" 
+                    th:value="${tempSystem}"
+                    th:text="${tempSystem}"
+                    />
+                </option>
+
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="Submit" />
+        </form>
+    </div>
+</body>
+
+</html>
