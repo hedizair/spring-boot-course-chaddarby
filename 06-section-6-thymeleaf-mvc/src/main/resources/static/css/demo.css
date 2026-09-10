@@ -11,6 +11,7 @@
   --color-text-muted: #6b7280;
   --color-border: #d9dce3;
   --color-danger: #dc2626;
+  --color-danger-bg: #fef2f2;
   --radius: 8px;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   --spacing: 1rem;
@@ -114,13 +115,106 @@ body {
   color: var(--color-text-muted);
 }
 
-.form-input.error {
-  border-color: var(--color-danger);
+/* ---------- États d'erreur ---------- */
+/* Une seule classe .error, utilisable seule (message texte, ex: ton <span>)
+   ou combinée avec .form-input / .form-check-input / .form-check-group
+   pour marquer le champ concerné. */
+
+/* Utilisation seule : <span class="error" th:errors="*{lastName}"></span> */
+.error {
+  display: block;
+  margin-top: 0.15rem;
+  padding: 0.35rem 0.6rem;
+  background-color: var(--color-danger-bg);
+  border-left: 3px solid var(--color-danger);
+  border-radius: 4px;
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
-.form-error {
-  font-size: 0.85rem;
-  color: var(--color-danger);
+/* Combinée sur un champ texte / select : <input class="form-input error" ...> */
+.form-input.error {
+  border-color: var(--color-danger);
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.form-input.error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+/* Combinée sur un radio/checkbox individuel : <input class="form-check-input error" ...> */
+.form-check-input.error {
+  outline: 2px solid var(--color-danger);
+  outline-offset: 2px;
+}
+
+/* Combinée sur tout le groupe de radio/checkbox, si l'erreur porte sur le champ
+   dans son ensemble plutôt que sur une case précise */
+.form-check-group.error {
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+}
+
+/* ---------- Select ---------- */
+/* Un <select> qui a déjà la classe .form-input reçoit en plus une flèche personnalisée */
+select.form-input {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.25rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.19l3.71-3.96a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  cursor: pointer;
+}
+
+/* ---------- Checkbox & Radio ---------- */
+/* Conteneur d'un groupe de checkbox/radio (ex: liste des langages) */
+.form-check-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+/* Variante pour aligner les options sur une ligne plutôt qu'en colonne */
+.form-check-group--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Une paire input + label (une seule case / un seul bouton radio) */
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* L'input checkbox/radio lui-même */
+.form-check-input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.form-check-input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Le texte à côté de la case/bouton */
+.form-check-label {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  cursor: pointer;
 }
 
 /* ---------- Boutons ---------- */

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th='http://www.thymeleaf.org'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Customer confirmation</title>
+    <link rel='stylesheet' th:href='@{/css/demo.css}' />
+</head>
+
+<body>
+    <div class="page-container">
+        <p class="page-title"> Customer confirmation </p>
+
+        <p class="text-block">The customer is confirmed : <span class="text-highlight" th:text="${customer.firstName + ' - ' + customer.lastName}"></span>
+        <p class="text-block">His number of free passes : <span class="text-highlight" th:text="${customer.freePasses}"></span>
+        <p class="text-block">His postal code : <span class="text-highlight" th:text="${customer.postalCode}"></span>
+        <p class="text-block">His course code : <span class="text-highlight" th:text="${customer.courseCode}"></span>
+        </p>
+    </div>
+</body>
+
+</html>
