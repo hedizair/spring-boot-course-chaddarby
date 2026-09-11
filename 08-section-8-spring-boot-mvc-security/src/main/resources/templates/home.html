@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="card shadow-sm text-center" style="width: 100%; max-width: 500px;">
+            <div class="card-body p-4">
+                <h2 class="card-title mb-3">Home Page</h2>
+                <hr>
+                <p class="card-text mb-4">Welcome to the home page</p>
+
+                <div class="mb-4">
+                    <p class="card-text">User : <span class="text-hl" sec:authentication="principal.username"></span>
+                    </p>
+                    <p class="card-text">Role(s) : <span class="text-hl"
+                            sec:authentication="principal.authorities"></span></p>
+                </div>
+                <!-- ! ! we can use sec:authentication to get session & authentication infos -->
+                <!-- ! ! we can use sec:authorize to display or not tags using authentication informations, as user roles  (sec:authorize="hasRole('MANAGER')")-->
+
+                <nav class="d-grid gap-2 mb-4">
+                    <a sec:authorize="hasRole('MANAGER')" th:href="@{/leaders}"
+                        class="btn btn-outline-primary">Leadership Meeting</a>
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/systems}" class="btn btn-outline-primary">IT Systems
+                        Meeting</a>
+                </nav>
+
+                <form action="#" th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-outline-danger">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
