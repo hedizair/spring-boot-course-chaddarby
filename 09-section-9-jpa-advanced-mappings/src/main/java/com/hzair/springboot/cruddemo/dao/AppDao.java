@@ -5,33 +5,41 @@ import java.util.List;
 import com.hzair.springboot.cruddemo.entity.Course;
 import com.hzair.springboot.cruddemo.entity.Instructor;
 import com.hzair.springboot.cruddemo.entity.InstructorDetail;
+import com.hzair.springboot.cruddemo.entity.Student;
 
 public interface AppDao {
-    public void save(Instructor instructor);
+    void save(Instructor instructor);
 
-    public Instructor findInstructorById(int theId);
+    Instructor findInstructorById(int theId);
 
-    public void deleteInstructorById(int theId);
+    void deleteInstructorById(int theId);
 
-    public InstructorDetail findInstructorDetailById(int theId);
+    InstructorDetail findInstructorDetailById(int theId);
 
-    public void deleteInstructorDetailById(int theId);
+    void deleteInstructorDetailById(int theId);
 
-    public List<Course> findCoursesByInstructorId(int theId);
-    
-    public Instructor findInstructorByIdJoinFetch(int theId);
-    
-    public Instructor update(Instructor instructor);
+    List<Course> findCoursesByInstructorId(int theId);
 
-    public Course update(Course course);
+    Instructor findInstructorByIdJoinFetch(int theId);
 
-    public Course findCourseById(int theId);
+    Instructor update(Instructor instructor);
 
-    public void deleteCourseById(int theId);
+    Course update(Course course);
 
-    public void save(Course course);
+    Course findCourseById(int theId);
 
-    public Course findCourseAndReviewsByCourseId(int theId);
+    void deleteCourseById(int theId);
 
+    void save(Course course);
+
+    Course findCourseAndReviewsByCourseId(int theId);
+
+    Course findCourseAndStudentsByCourseId(int theId);
+
+    Student findStudentAndCoursesByStudentId(int theId);
+
+    Student update(Student student);
+
+    void deleteStudentById(int theId);
 
 }

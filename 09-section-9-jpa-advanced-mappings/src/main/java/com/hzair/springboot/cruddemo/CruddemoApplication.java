@@ -40,7 +40,12 @@ public class CruddemoApplication {
 			// createCourseAndReview(appDao);
 			// findCourseAndReviews(appDao);
 			// deleteCourseAndReviews(appDao);
-			createCourseAndStudents(appDao);
+			// createCourseAndStudents(appDao);
+			// findCourseAndStuents(appDao);
+			// findStudentAndCourses(appDao);
+			// addMoreCoursesForStudent(appDao);
+			// deleteCourse(appDao);
+			deleteStudent(appDao);
 		};
 	}
 
@@ -201,6 +206,8 @@ public class CruddemoApplication {
 
 		appDao.deleteCourseById(theId);
 
+		System.out.println("Done");
+
 	}
 
 	private void createCourseAndReview(AppDao appDao) {
@@ -261,6 +268,70 @@ public class CruddemoApplication {
 
 		System.out.println("Done");
 
+	}
+
+	private void findCourseAndStuents(AppDao appDao) {
+
+		int courseId = 10;
+
+		System.out.println("Retreiving course and students....");
+
+		Course course = appDao.findCourseAndStudentsByCourseId(courseId);
+
+		System.out.println("The course: " + course);
+
+		System.out.println("His students: " + course.getStudents());
+
+	}
+
+	private void findStudentAndCourses(AppDao appDao) {
+
+		int studentId = 1;
+
+		System.out.println("Retreiving student and courses....");
+
+		Student student = appDao.findStudentAndCoursesByStudentId(studentId);
+
+		System.out.println("The student: " + student);
+
+		System.out.println("His courses: " + student.getCourses());
+
+	}
+
+
+	private void addMoreCoursesForStudent(AppDao appDao) {
+
+		int studentId = 2;
+
+		System.out.println("Retreiving Student...");
+
+		Student student = appDao.findStudentAndCoursesByStudentId(studentId);
+
+		Course course1 = new Course("Maths");
+		Course course2 = new Course("French");
+
+		student.addCourse(course1);
+		student.addCourse(course2);
+
+		System.out.println("Updating student with more courses");
+
+
+		Student updatedStudent = appDao.update(student);
+
+		System.out.println("The student updated: " + updatedStudent);
+		System.out.println("His courses: " + updatedStudent.getCourses());
+
+	}
+
+	private void deleteStudent(AppDao appDao) {
+
+		int studentId = 2;
+
+		System.out.println("Deleting a student id: " + studentId);
+
+		appDao.deleteStudentById(studentId);
+
+		System.out.println("Done");
 	}
 
 }
