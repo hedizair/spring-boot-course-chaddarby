@@ -1,14 +1,17 @@
 package com.hzair.springboot.cruddemo.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hzair.springboot.cruddemo.entity.Course;
 import com.hzair.springboot.cruddemo.entity.Instructor;
 import com.hzair.springboot.cruddemo.entity.InstructorDetail;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Id;
+import jakarta.persistence.TypedQuery;
 
 @Repository
 public class AppDaoImpl implements AppDao {
@@ -32,6 +35,11 @@ public class AppDaoImpl implements AppDao {
 
         Instructor instructorToDelete = entityManager.find(Instructor.class, theId);
 
+        // We need to remove the association between instructor & course
+        for (Course tempCourse : instructorToDelete.getCourses()) {
+            tempCourse.setInstructor(null);
+        }
+
         entityManager.remove(instructorToDelete);
     }
 
@@ -47,4 +55,93 @@ public class AppDaoImpl implements AppDao {
     public InstructorDetail findInstructorDetailById(int theId) {
         return entityManager.find(InstructorDetail.class, theId);
     }
+
+    @Override
+    @Transactional
+    public void deleteInstructorDetailById(int theId) {
+
+        InstructorDetail instructorDetailToDelete = entityManager.find(InstructorDetail.class, theId);
+
+        instructorDetailToDelete.getInstructor().setInstructorDetail(null); // ! Comprend pas pk on doit faire ça étant
+                                                                            // donné que c'est deja en cascade
+
+        entityManager.remove(instructorDetailToDelete);
+    }
+
+    @Override
+    public List<Course> findCoursesByInstructorId(int theId) {
+
+        System.out.println("Before query");
+        // ! FROM {EntityName} !!!!!!!
+        TypedQuery<Course> query = entityManager.createQuery("FROM Course WHERE instructor.id=:data", Course.class);
+
+        query.setParameter("data", theId);
+
+        List<Course> courses = query.getResultList();
+        System.out.println("After query");
+
+        return courses;
+    }
+
+    @Override
+    public Instructor findInstructorByIdJoinFetch(int theId) {
+
+        TypedQuery<Instructor> query = entityManager.createQuery("SELECT i FROM Instructor i "
+                + "JOIN FETCH i.courses "
+                + "JOIN FETCH i.instructorDetail  "
+                + "WHERE i.id = :data", Instructor.class);
+
+        query.setParameter("data", theId);
+
+        Instructor instructor = query.getSingleResult();
+
+        return instructor;
+    }
+
+    @Override
+    @Transactional
+    public Instructor update(Instructor instructor) {
+        return entityManager.merge(instructor);
+    }
+
+    @Override
+    @Transactional
+    public Course update(Course course) {
+        return entityManager.merge(course);
+    }
+
+    @Override
+    public Course findCourseById(int theId) {
+        return entityManager.find(Course.class, theId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCourseById(int theId) {
+
+        Course courseToDelete = entityManager.find(Course.class, theId);
+
+        entityManager.remove(courseToDelete);
+    }
+
+    @Override
+    @Transactional
+    public void save(Course course) {
+        entityManager.persist(course);
+    }
+
+    @Override
+    public Course findCourseAndReviewsByCourseId(int theId) {
+        TypedQuery<Course> query = entityManager.createQuery(
+            "SELECT c FROM Course c " +
+            "JOIN FETCH c.reviews " + 
+            "WHERE c.id = :data", Course.class);
+
+        query.setParameter("data", theId);
+
+        Course course = query.getSingleResult();
+
+        return course;
+    }
+
 }

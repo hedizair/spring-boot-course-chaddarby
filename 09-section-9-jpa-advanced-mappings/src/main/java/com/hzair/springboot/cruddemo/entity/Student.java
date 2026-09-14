@@ -11,83 +11,74 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "instructor")
-public class Instructor {
+@Table(name = "student")
+public class Student {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "first_name")
+    @Column(name = "firstName")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "lastName")
     private String lastName;
 
     @Column(name = "email")
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "instructor_detail_id")
-    private InstructorDetail instructorDetail;
-
-    @OneToMany(mappedBy = "instructor", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-            CascadeType.REFRESH }, fetch = FetchType.LAZY) // * fetch = FetchType.EAGER Load the ressources for each db request to an instructor
-                                                            // * fetch = FetchType.LAZY Not load the sub ressources  (edfault value for "fetch" annotation param)
+    @ManyToMany(
+        fetch = FetchType.LAZY, 
+        cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH },
+        mappedBy = "students" // * Spring will the the students attribut present on the Course class to use the @ManyToMany to find what it necessary to make the association
+    )
     private List<Course> courses;
 
-    public Instructor() {
+    public Student() {
     }
 
-    public Instructor(String firstName, String lastName, String email) {
+    public Student(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
     public int getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public InstructorDetail getInstructorDetail() {
-        return instructorDetail;
+        return this.id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getFirstName() {
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return this.lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public void setInstructorDetail(InstructorDetail instructorDetail) {
-        this.instructorDetail = instructorDetail;
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Course> getCourses() {
@@ -98,24 +89,23 @@ public class Instructor {
         this.courses = courses;
     }
 
-    // * Add convenience methods for bi-directional relationship
-    public void addCourse(Course tempCourse) {
+    // * Add convenience methods
+    public void addCourse(Course course) {
         if (courses == null) {
             courses = new ArrayList<>();
         }
 
-        courses.add(tempCourse);
-        tempCourse.setInstructor(this);
+        courses.add(course);
+        course.addStudent(this); // ! pourqioi on fait pas la même chose dans Course.addStudent ?
     }
 
     @Override
     public String toString() {
-        return "instructor{" +
+        return "{" +
                 " id='" + getId() + "'" +
                 ", firstName='" + getFirstName() + "'" +
                 ", lastName='" + getLastName() + "'" +
                 ", email='" + getEmail() + "'" +
-                ", instructorDetail='" + getInstructorDetail() + "'" +
                 "}";
     }
 
