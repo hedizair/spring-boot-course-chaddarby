@@ -19,7 +19,7 @@ import com.hzair.springboot.cruddemo.service.EmployeeService;
 import tools.jackson.databind.json.JsonMapper;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/{version}")
 public class EmployeeRestController {
 
     private EmployeeService employeeService;
@@ -28,6 +28,21 @@ public class EmployeeRestController {
     public EmployeeRestController(EmployeeService employeeService, JsonMapper jsonMapper) {
         this.employeeService = employeeService;
         this.jsonMapper = jsonMapper;
+    }
+
+    @GetMapping(path="/helloworld", version="1")
+    public String helloworldV1() {
+        return "Hello World from version 1";
+    }
+
+    @GetMapping(path="/helloworld", version="2")
+    public String helloworldV2() {
+        return "Hello World from version 2";
+    }
+
+    @GetMapping(path="/helloworld", version="3")
+    public String helloworldV3() {
+        return "Hello World from version 3";
     }
 
     @GetMapping("/employees")
